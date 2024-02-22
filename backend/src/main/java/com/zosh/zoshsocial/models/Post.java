@@ -1,5 +1,6 @@
 package com.zosh.zoshsocial.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,8 +26,13 @@ public class Post {
     private String caption;
     private String image;
     private String video;
+
+    @JsonIgnore
+    @ManyToOne
     private User user;
+
     private LocalDateTime createdAt;
 
+    @OneToMany
     private List<User> liked = new ArrayList<>();
 }

@@ -19,7 +19,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/user/{userId}")
-    public ResponseEntity<Post> createPost(Post post,
+    public ResponseEntity<Post> createPost(@RequestBody Post post,
                                            @PathVariable Integer userId) throws Exception {
         Post createdPost = postService.createNewPost(post, userId);
         return new ResponseEntity<>(createdPost, HttpStatus.ACCEPTED);
@@ -57,7 +57,7 @@ public class PostController {
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
-    @PutMapping("/{postId}/user/{userId}")
+    @PutMapping("/save/{postId}/user/{userId}")
     public ResponseEntity<Post> savedPostHandler(
             @PathVariable Integer postId,
             @PathVariable Integer userId
