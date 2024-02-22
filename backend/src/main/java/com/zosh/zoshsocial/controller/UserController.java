@@ -19,12 +19,6 @@ public class UserController {
         return userService.findAllUsers();
     }
 
-    @PostMapping
-    public User createUser(@RequestBody User user){
-        User savedUser = userService.registerUser(user);
-        return savedUser;
-    }
-
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable("userId") Integer id) throws Exception {
         User user = userService.findUserById(id);

@@ -3,6 +3,7 @@ package com.zosh.zoshsocial.service;
 import com.zosh.zoshsocial.models.User;
 import com.zosh.zoshsocial.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> findAllUsers() {
@@ -21,6 +23,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User registerUser(User user) {
+        User isExist = userRepository.findByEmail(user.getEmail());
+        if (isExist != null){
+            throw new RuntimeException("email is already used with another account");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
         return savedUser;
     }
